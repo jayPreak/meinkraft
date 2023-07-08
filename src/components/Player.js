@@ -22,7 +22,8 @@ export const Player = () => {
   useFrame(() => {
     // console.log("camera.position", camera.position);
     camera.position.copy(
-      new Vector3(pos.current[0], pos.current[1], pos.current[2])
+      new Vector3(pos.current[0], pos.current[1], pos.current[2]),
+      api.velocity.set(0, 1, 1)
     );
   });
 
