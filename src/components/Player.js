@@ -8,9 +8,12 @@ export const Player = () => {
   const [ref, api] = useSphere(() => ({
     mass: 1,
     type: "Dynamic",
-    position: [0, 0, 0],
+    position: [0, 1, 0],
   }));
-
+  const vel = useRef([0, 0, 0]);
+  useEffect(() => {
+    api.velocity.subscribe((v) => (vel.current = v));
+  }, [api.velocity]);
   const pos = useRef([0, 0, 0]);
   useEffect(() => {
     api.position.subscribe((p) => (pos.current = p));
