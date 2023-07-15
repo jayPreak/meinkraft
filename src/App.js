@@ -3,6 +3,7 @@ import { Sky } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Ground } from "./components/Ground";
 import { Player } from "./components/Player";
+import { FirstPerson } from "./components/FirstPerson";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Canvas>
         <Sky sunPosition={[100, 20, 100]} />
         <ambientLight intensity={0.5} />
+        <FirstPerson />
         <Physics>
           <Player />
           <Ground />

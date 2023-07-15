@@ -4,13 +4,14 @@ import { useEffect, useRef } from "react";
 import { Vector3 } from "three";
 import { useKeyboard } from "./hooks/useKeyboard";
 
-const JUMP = 6;
+const JUMP = 3.2;
 const GRAVITY = -9.8;
 
 export const Player = () => {
   const { camera } = useThree();
-  const { moveForward, moveBackward, moveLeft, moveRight, jump } =
+  const { moveForward, moveBackward, moveLeft, moveRight, jump, sprint } =
     useKeyboard();
+
   // console.log(
   //   "actions",
   //   // actions
@@ -37,25 +38,44 @@ export const Player = () => {
     );
     // api.velocity.set(0, 1, 1)
 
-    const direction = Vector3();
-    const forwardVector = Vector3(
+    const direction = new Vector3();
+    const forwardVector = new Vector3(
       0,
       0,
       (moveBackward ? 1 : 0) - (moveForward ? 1 : 0)
     );
-    const sideVector = Vector3((moveLeft ? 1 : 0) - (moveRight ? 1 : 0), 0, 0);
-    if (moveForward) {
-      api.velocity.set(vel.current[0], vel.current[1], -3);
+    const sideVector = new Vector3(
+      (moveLeft ? 1 : 0) - (moveRight ? 1 : 0),
+      0,
+      0
+    );
+
+    let SPEED = 3;
+    if (sprint) {
+      SPEED = 5;
     }
-    if (moveBackward) {
-      api.velocity.set(vel.current[0], vel.current[1], 3);
+    if (!sprint) {
+      SPEED = 3;
     }
-    if (moveLeft) {
-      api.velocity.set(-3, vel.current[1], vel.current[2]);
-    }
-    if (moveRight) {
-      api.velocity.set(3, vel.current[1], vel.current[2]);
-    }
+
+    direction
+      .subVectors(forwardVector, sideVector)
+      .normalize()
+      .multiplyScalar(SPEED)
+      .applyEuler(camera.rotation);
+    api.velocity.set(direction.x, vel.current[1], direction.z);
+    // if (moveForward) {
+    //   api.velocity.set(vel.current[0], vel.current[1], -3);
+    // }
+    // if (moveBackward) {
+    //   api.velocity.set(vel.current[0], vel.current[1], 3);
+    // }
+    // if (moveLeft) {
+    //   api.velocity.set(-3, vel.current[1], vel.current[2]);
+    // }
+    // if (moveRight) {
+    //   api.velocity.set(3, vel.current[1], vel.current[2]);
+    // }
     if (jump && Math.abs(vel.current[1]) < 0.005) {
       api.velocity.set(vel.current[0], JUMP, vel.current[2]);
     }
