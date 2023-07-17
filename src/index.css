@@ -23,7 +23,8 @@ body {
   position: fixed;
   overflow: hidden;
   overscroll-behavior-y: none;
-  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir,
+    helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
   font-size: 40px;
 }
 
@@ -41,4 +42,33 @@ body {
 
 .absolute {
   position: absolute;
+}
+.dot {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  cursor: none;
+}
+
+.dot::before,
+.dot::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dot::before {
+  height: 35px;
+}
+
+.dot::after {
+  width: 35px;
 }
