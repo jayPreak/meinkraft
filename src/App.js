@@ -13,7 +13,7 @@ function App() {
       <Canvas>
         <Sky sunPosition={[100, 20, 100]} />
         <ambientLight intensity={0.5} />
-        <FirstPerson />
+        {/* <FirstPerson /> */}
         <Physics>
           <Player />
           <Cubes />
